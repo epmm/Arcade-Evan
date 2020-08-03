@@ -1,0 +1,14 @@
+            
+<div class="flexbox-item" ng-init="resetGames(); reload();">
+                <br>
+                <center><h4 style="font-family: Iceland">Brick Breaker</h4></center>
+                <center><p style="font-size: 22; font-family: Iceland; margin-left: 100; margin-right: 100;">We all knew someone with a Blackberry. You know what to do. My version looks like this picture below. There are 3 levels to conquer, and you have 3 extra lives to play with. Press the "Start Game" buttton to open the game window. Click inside the game window to start and stop ball movement. Good Luck, and try not to lose. </p></center>
+                
+                <center><img src="pictures/bbpic.PNG" alt="Image" style="width:450; height: 300;display: inline; justify-content: flex-start"></center>
+                <br>
+                <center>
+                <div >
+                <button class="dropbtn startGame" ng-hide="myBB" ng-click="toggleBB()" onclick="startBB()"><p><a>Start Game</a></p></button>
+                <button class="dropbtn newGame" ng-show="myBB" ng-click="reload()"><p><a>New Game</a></p></button>
+                </div></center>
+            </div>

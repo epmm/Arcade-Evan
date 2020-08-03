@@ -1,0 +1,103 @@
+<html>
+<head>
+    <title>Arcade Evan</title>
+    <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Vampiro One" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Iceland" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Press Start 2P" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>  
+    <link rel="stylesheet" type="text/css" href="css/Arcade.css">
+    <script src='js/angular.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src='js/Arcade.js'></script>
+</head>
+<body id="bigBody" ng-app="arcadeFront" ng-controller="arcadeCon" onload="init(), initit();" ng-init="sessionInfo();">
+    <div class="grid-container">
+        <div class="grid-item ArcHead" id="ArcHead">
+            Arcade - Evan 
+        </div>
+        <div class="grid-item Nav" id="navbar">
+            <div class="flexbox-item nav1">
+                <p><a href='#!'>Home </a></p>
+            </div>
+            <div class="flexbox-item nav2">
+                <p><a style="color:black">|</a></p>
+            </div>
+            <div class="flexbox-item nav3 dropdown">
+                <button class="dropbtn"><p><a>Play:</a></p></button>
+                  <div class="dropdown-content">
+                  <p><a style="font-size: 22pt" href="#!BB" >Brick Breaker</a></p>
+                  <p><a style="font-size: 22pt" href="#!KC" >Kings Corner</a></p>
+                  </div>
+            </div>
+            <div class="flexbox-item nav4">
+                <p><a style="color:black">|</a></p>
+            </div>
+            <div class="flexbox-item nav5">
+                <p><a href='#!Leaderboards'>Leaderboards</a></p>
+            </div>
+            <div class="flexbox-item nav6">
+                <p><a style="color:black">|</a></p>
+            </div>
+            <div class="flexbox-item nav7">
+                <p><a href='#!ArcAbout'>About</a></p>
+            </div>
+            <div class="flexbox-item nav8">
+                <p><a style="color:black">|</a></p>
+            </div>
+            <div class="flexbox-item nav9" ng-hide="loggedIn">
+                <p><a href='#!ArcLogSign'>Login/Sign-up</a></p>
+            </div>
+            <div class="flexbox-item nav10" ng-show="loggedIn">
+                <p><a href='#!ArcUserPage'>{{currentUser.username}}</a></p>
+            </div>
+            <div class="flexbox-item nav11" ng-show="loggedIn">
+                <p><a style="color:black">|</a></p>
+            </div>
+            <div class="flexbox-item nav12" ng-show="loggedIn">
+                <button class="dropbtn" ng-click="logout()"><p><a>Logout</a></p></button>
+            </div>
+            
+        </div>
+        
+        <div class="grid-item beef" id="page">
+            <div class="bb">
+            <div ng-view></div>
+                <br>
+            
+
+			<div class="bb" style="width: 918px; height: 600px; margin:auto;" ng-show="myBB == true;"><center>
+                <input id="timerBB" value="0" readonly="readonly">
+                <input id="livesLeft" readonly="readonly">
+                <input id="level" readonly="readonly">
+                <input id="victoryBB" value="pregame" readonly="readonly">
+                <canvas id="myCanvas" width="918" height="600" style="border:1px solid #000000; width: 918; height: 600">  
+                    <script type="text/javascript" src="js/BrickBreaker.js"></script>
+                </canvas> </center>
+                
+            </div>
+            <br>
+             
+            <div class="bb" style="width: 1202px; height: 722px; margin:auto;" ng-show="myKC"><center>
+                <input id="timer" value="0" readonly="readonly">
+                <input id="turns" readonly="readonly"> 
+                <input id="victoryKC" value="pregame" readonly="readonly">
+                <canvas id="disCanvas" width="1200" height="720" style="width: 1200; height: 720; border:1px solid #000000;">
+                    <script type="text/javascript" src="js/KingsCorners.js"></script>
+                </canvas></center>
+            </div>
+            <br><br>
+                
+        </div>
+        </div> 
+        <div class="grid-item thefoot">
+           <p><a>Made by Evan Munro - epmm18@gmail.com</a></p>
+        </div>
+    </div>
+</body>
+</html>

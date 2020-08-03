@@ -1,0 +1,40 @@
+
+            <div class="flexbox-item" ng-init="resetGames()">
+                <br>
+                <center>
+                <input type="checkbox" ng-model="radLogin" ng-change="radSignup = false;" id="log" name="logButt" value="Login">
+                <label for="log" style="font-family: Iceland; font-size: 32pt">Login</label><br>
+                <input type="checkbox" ng-model="radSignup" ng-change="radLogin = false;" id="signup" name="signupButt" value="Signup">
+                <label for="signup" style="font-family: Iceland; font-size: 32pt">Sign-up</label>
+                </center>
+                
+                <br>
+                <div ng-show="radLogin">
+                <center><form class="pure-form">
+                    <fieldset class="pure-group">
+                        <input ng-model='loginForm.uname' type=text style="font-family: Iceland" placeholder="Username" required>
+                        <input ng-model='loginForm.pword' type="password" style="font-family: Iceland" placeholder="Password" required>
+                    </fieldset>
+                    <br>
+                    <button type="submit" style="font-family: Iceland" class="pure-button pure-input-1-2 pure-button-primary startGame" ng-click="attemptLogin()">Log in</button>
+                </form></center>
+                </div>
+                
+                
+                <div ng-show="radSignup">
+                <center><form class="pure-form">
+                    <fieldset class="pure-group">
+                        <input type="text" style="font-family: Iceland" ng-model="signupForm.uname" placeholder="Username" required/>
+                        <input type="text" style="font-family: Iceland" ng-model="signupForm.pword" placeholder="Password" required/>
+                        <br>
+                        <input type="text" style="font-family: Iceland" ng-model="signupForm.fname" placeholder="First Name" required/>
+                        <input type="text" style="font-family: Iceland" ng-model="signupForm.lname" placeholder="Last Name" required/>
+                    </fieldset>
+                    <br>
+                    <button type="submit" style="font-family: Iceland" class="pure-button pure-input-1-2 pure-button-primary startGame" ng-click="attemptSignup()">Sign up</button>
+                </form></center>
+                </div>
+                
+            </div>
+            
+

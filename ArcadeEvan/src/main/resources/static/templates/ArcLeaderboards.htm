@@ -1,0 +1,113 @@
+
+            <div class="flexbox-item" ng-init="resetGames(); boxBB.checked = false; boxKC.checked = false; boxResults.checked = false; boxWins.checked = false;">
+                <br>
+                <center><h3 style="font-family: Iceland">Leaderboards </h3></center>
+                <center><p style="font-size: 22; font-family: Iceland">Use the checkboxes to filter the leaderboard. </p></center>
+                <center>
+                <input type="checkbox" ng-model="boxBB.checked" ng-change="boxKC.checked = false; boxResults.checked = false; boxWins.checked = false;" id="bbBoard" name="bblb" value="Brick Breaker">
+                <label for="bbBoard" style="font-family: Iceland; font-size: 32pt">Brick Breaker</label><br>
+                <input type="checkbox" ng-model="boxKC.checked" ng-change="boxBB.checked = false; boxResults.checked = false; boxWins.checked = false;" id="kcBoard" name="kclb" value="Kings Corner">
+                <label for="kcBoard" style="font-family: Iceland; font-size: 32pt">Kings Corner</label>
+                <br>
+                    <p ng-show="boxBB.checked || boxKC.checked">--------------------------------------------------------------------</p>
+                </center>
+                <center>
+                <input type="checkbox" ng-show="boxBB.checked || boxKC.checked" ng-model="boxWins.checked" ng-change="boxResults.checked = false; getWinsBoard();" id="winsBoard" name="winslb" value="Wins & Ratio">
+                <label ng-show="boxBB.checked || boxKC.checked" for="winsBoard" style="font-family: Iceland; font-size: 32pt">User Rankings</label><br>
+                <input type="checkbox" ng-show="boxBB.checked || boxKC.checked" ng-model="boxResults.checked" ng-change="boxWins.checked = false; getResultsBoard();" id="resultsBoard" name="resultslb" value="All Results">
+                <label ng-show="boxBB.checked || boxKC.checked" for="resultsBoard" style="font-family: Iceland; font-size: 32pt">Individual Score Rankings</label>
+                <br>
+                    <p ng-show="boxWins.checked || boxResults.checked">--------------------------------------------------------------------</p>
+                </center>
+                <center>
+                <label ng-show="boxWins.checked || boxResults.checked" for="resultsBoard" style="font-family: Iceland; font-size: 32pt">Filter by Username: </label>
+                <input ng-show="boxWins.checked || boxResults.checked" type="text" style="font-family: Iceland" ng-model="userResultsForm.username" placeholder="Username" required/>
+                <button ng-show="boxWins.checked || boxResults.checked" type="submit" style="font-family: Iceland" class="pure-button pure-input-1-2 pure-button-primary startGame" ng-click="getResultsByUser();">Search</button>
+                </center>
+                
+                <div id="BBWins" style="font-family: Iceland" ng-show="boxWins.checked">
+                    <center>
+                    <table class="table table-sm table-striped table-hover table-bordered col-sm-9 mx-auto" style="padding: 20 pt; background-color: lightslategray;">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" style="color:aqua">Rank</th>
+                        <th scope="col" style="color:aqua">Username</th>
+                        <th scope="col" style="color:aqua">Wins</th>
+                        <th scope="col" style="color:aqua">Losses</th>
+                        <th scope="col" style="color:aqua">Total Games</th>
+                        <th scope="col" style="color:aqua">Win/TotalGames Ratio</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr scope="row" ng-repeat="leader in leaderboard  | orderBy: ['-wins','-ratio']">
+                        <td style="color:aliceblue">{{makeRanks($index, 1) + 1}}</td> <!--{{$index + 1}} add this to test for correct tie ranks-->
+                        <td style="color:aliceblue">{{leader.username}}</td>
+                        <td style="color:aliceblue">{{leader.wins}}</td>
+                        <td style="color:aliceblue">{{leader.losses}}</td>
+                        <td style="color:aliceblue">{{leader.totalgames}}</td>
+                        <td style="color:aliceblue">{{leader.ratio}}</td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    </center>
+                </div>
+                
+                <div id="BBResults" style="font-family: Iceland" ng-show="boxResults.checked && boxBB.checked">
+                    <center>
+                    <table class="table table-sm table-striped table-hover table-bordered col-sm-9 mx-auto" style="padding: 20 pt; background-color: lightslategray;">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" style="color:aqua">Rank</th>
+                        <th scope="col" style="color:aqua">Username</th>
+                        <th scope="col" style="color:aqua">Victory</th>
+                        <th scope="col" style="color:aqua">Time (seconds)</th>
+                        <th scope="col" style="color:aqua">Level</th>
+                        <th scope="col" style="color:aqua">Lives Remaining</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr scope="row" ng-repeat="leader in leaderboard  | orderBy: ['-victory','-lvl','-livesremain','time']">
+                        <td style="color:aliceblue">{{makeRanks($index, 2) + 1}}</td> <!--{{$index + 1}} add this to test for correct tie ranks-->
+                        <td style="color:aliceblue">{{leader.username}}</td>
+                        <td style="color:aliceblue">{{leader.victory}}</td>
+                        <td style="color:aliceblue">{{leader.time}}</td>
+                        <td style="color:aliceblue">{{leader.lvl}}</td>
+                        <td style="color:aliceblue">{{leader.livesremain}}</td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    </center>
+                </div>
+                
+                <div id="KCResults" style="font-family: Iceland" ng-show="boxResults.checked && boxKC.checked">
+                    <center>
+                    <table class="table table-sm table-striped table-hover table-bordered col-sm-9 mx-auto" style="padding: 20 pt; background-color: lightslategray;">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" style="color:aqua">Rank</th>
+                        <th scope="col" style="color:aqua">Username</th>
+                        <th scope="col" style="color:aqua">Victory</th>
+                        <th scope="col" style="color:aqua">Time (seconds)</th>
+                        <th scope="col" style="color:aqua">Turns Taken</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr scope="row" ng-repeat="leader in leaderboard  | orderBy: ['-victory','time','turnstaken']">
+                        <td style="color:aliceblue">{{makeRanks($index, 3) + 1}}</td>  <!--{{$index + 1}} add this to test for correct tie ranks-->
+                        <td style="color:aliceblue">{{leader.username}}</td>
+                        <td style="color:aliceblue">{{leader.victory}}</td>
+                        <td style="color:aliceblue">{{leader.time}}</td>
+                        <td style="color:aliceblue">{{leader.turnstaken}}</td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    </center>
+                </div>
+                <br><br>
+                
+                
+                <br>
+                
+            </div>
+            
+

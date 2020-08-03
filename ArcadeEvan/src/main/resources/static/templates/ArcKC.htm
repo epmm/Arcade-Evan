@@ -1,0 +1,17 @@
+
+            <div class="flexbox-item " ng-init="resetGames(); reload();">
+                <br>
+                <center><h4 style="font-family: Iceland">Kings Corner</h4></center>
+                <center><p style="font-size: 22; font-family: Iceland; margin-left: 100; margin-right: 100;">In my version of this classic card game, you compete against the computer 1 v 1. Look at the site <a href="https://bicyclecards.com/how-to-play/kings-corner/">here</a> to learn the rules of the game. Click and drag your cards until your cursor hovers over other stacks on the table, then release the mouse to drop your card. The table with turn white if a viable play exists in the table stack that you hover over. If multiple moves can be made on the same stack, then you will be prompted to select the card you wish to play. Press "End Turn" when you are finished with your turn. You will automatically be dealt a card from the deck, your opponent with make their play(s), and they will also be dealt a card from the deck. Do not worry, the computer is not cheating, it just plays very quickly. The timer starts as soon as you press the "Start Game" button, so be ready to get to work and earn a spot on the leaderboard. Good luck.  </p></center>
+                
+                <center>
+                <img src="pictures/kcpic.PNG" alt="Image" style="width:450; height: 300;display: inline; justify-content: flex-end"></center>
+                <br>
+                <center>
+                <div >
+                <button class="dropbtn startGame" ng-hide="myKC" ng-click="toggleKC()" onclick="startKC()"><p><a>Start Game</a></p></button>
+                <button class="dropbtn newGame" ng-show="myKC" ng-click="reload()"><p><a>New Game</a></p></button>
+                </div></center>
+            </div>
+            
+

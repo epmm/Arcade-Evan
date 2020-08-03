@@ -1,0 +1,89 @@
+
+            <div class="flexbox-item" ng-init="resetGames(); getUserInfo(); getMsgBox(); reload();">
+                <br>
+                <center><h3 style="font-family: Iceland">{{currentUser.username}}'s Page </h3></center>
+                <center><br>--------------------------------------------------------------------</center>
+                <center><h4 style="font-family: Iceland">Message Center </h4></center>
+                <center><p style="font-size: 22; font-family: Iceland">Send and receive messages from other people with arcade accounts. </p></center>
+                <center><h5 style="font-family: Iceland">Your Messages</h5></center>
+                <div class="col-sm-9 mx-auto" style="overflow-y:auto; max-height: 350px;">
+                    <center>
+                        <table class="table table-sm table-striped table-hover table-bordered" style="background-color: lightslategray;font-family: Iceland;">
+                        <thead class="thead-dark">
+                        <tr >
+                            <th scope="col" style="width: 30px;color:aqua;"></th>
+                            <th scope="col" style="color:aqua">Date</th>
+                            <th scope="col" style="color:aqua">Time</th>
+                            <th scope="col" style="color:aqua">To: </th>
+                            <th scope="col" style="color:aqua">From: </th>
+                            <th scope="col" style="color:aqua">Subject</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr scope="row" ng-repeat-start="msg in msgBox  | orderBy: ['-msgdate.substring(4)','-msgdate.substring(0,4)','-msgtime']">
+                            <td style="color:aliceblue">
+                                <button  ng-if="msg.expanded" ng-click="msg.expanded = false" style="width: 28px; color:black">-</button>
+                                <button  ng-if="!msg.expanded" ng-click="msg.expanded = true" style="width: 28px; color:black">+</button>
+                            </td>
+                            <td style="color:aliceblue">{{msg.msgdate.substring(0,2)}}/{{msg.msgdate.substring(2,4)}}/{{msg.msgdate.substring(4)}}</td>
+                            <td style="color:aliceblue">{{msg.msgtime.substring(0,2)}}:{{msg.msgtime.substring(2)}}</td>
+                            <td style="color:aliceblue">{{msg.receiver}}</td>
+                            <td style="color:aliceblue">{{msg.sender}}</td>
+                            <td style="color:aliceblue">{{msg.subject}}</td>
+                        </tr>
+                        <tr ng-if="msg.expanded" ng-repeat-end="">
+                            <td colspan="6">{{msg.msgbody}}</td>
+                        </tr>
+                        </tbody>
+                        </table>
+                    </center>
+                </div>
+                <br>
+                <center><button ng-hide="msgMenu" type="submit" style="font-family: Iceland" class="pure-button pure-input-1-2 pure-button-primary startGame" ng-click="toggleMsgMenu();" >Create New Message</button></center>
+                <center><button ng-show="msgMenu" type="submit" style="font-family: Iceland" class="pure-button pure-input-1-2 pure-button-primary startGame" ng-click="toggleMsgMenu();" >Cancel Message</button></center>
+                <br>
+                <center><form name="upUserForm" class="pure-form" ng-show="msgMenu">
+                    <fieldset class="pure-group">
+                        <input type="text" style="font-family: Iceland" ng-model="messageForm.subject" name="messageSubj" placeholder="Subject" required/>
+                        <br>
+                        <textarea type="text" style="font-family: Iceland" ng-model="messageForm.body" name="message" rows="8" cols="40" placeholder="Type Message Here" required/>
+                        <br>
+                        <label for="resultsBoard" style="font-family: Iceland; font-size: 32pt">Find User: </label>
+                        <input type="text" style="font-family: Iceland" ng-model="messageForm.username" ng-change="findUsers()" placeholder="Username" required/>
+                        <select ng-model="messageForm.recipient" style="font-family: Iceland; min-width: 250px;">
+                        <option ng-repeat="user in userProfiles" value="{{user.id}}">{{user.username}}</option>
+                        </select>
+                        <br>
+                        <button type="submit" style="font-family: Iceland" class="pure-button pure-input-1-2 pure-button-primary startGame" ng-click="sendMessage();">Send</button>
+                    </fieldset>
+                </form></center>
+                <center><br>--------------------------------------------------------------------</center>
+                <center><h5 style="font-family: Iceland">Update Account </h5></center>
+                <center><p style="font-size: 22; font-family: Iceland">Start typing in the fields below to update your user information. <br>You may change one data field or more at a time. <br> Just remember to enter your old password next to the 'Send' button when it appears.</p></center>
+                <center><form name="upUserForm" class="pure-form">
+                    <fieldset class="pure-group">
+                        <input type="text" style="font-family: Iceland" ng-model="updateForm.uname" name="updateuname" placeholder="Enter New Username" required/>
+                        <input type="text" style="font-family: Iceland" ng-model="updateForm.pword" name="updatepword" placeholder="Enter New Password" required/>
+                        <br>
+                        <input type="text" style="font-family: Iceland" ng-model="updateForm.fname" name="updatefname" placeholder="First Name: {{currentUser.firstname}}" required/>
+                        <input type="text" style="font-family: Iceland" ng-model="updateForm.lname" name="updatelname" placeholder="Last Name: {{currentUser.lastname}}" required/>
+                    </fieldset>
+                    <br>
+                    <input ng-show="upUserForm.updateuname.$valid || upUserForm.updatepword.$valid || upUserForm.updatefname.$valid || upUserForm.updatelname.$valid" type="text" style="font-family: Iceland" ng-model="updateForm.oldpword" name="oldpword" placeholder="Enter Old Password" required/>
+                    <button ng-show="upUserForm.updateuname.$valid || upUserForm.updatepword.$valid || upUserForm.updatefname.$valid || upUserForm.updatelname.$valid" type="submit" style="font-family: Iceland" class="pure-button pure-input-1-2 pure-button-primary startGame" ng-click="attemptUserUpdate()">Update Info</button>
+                </form></center>
+                <center><br>--------------------------------------------------------------------</center>
+                <center><h5 style="font-family: Iceland">Delete Account </h5></center>
+                <center><p style="font-size: 22; font-family: Iceland">Enter your credntials below and press the button (when it appears) to permanently delete your account.<br> All scores and messages associated with your account will also be deleted.</p></center>
+                <center><form name="delForm" class="pure-form">
+                    <fieldset class="pure-group">
+                        <input ng-model='deleteForm.uname' name="deluname" type=text style="font-family: Iceland" placeholder="Username" required>
+                        <input ng-model='deleteForm.pword' name="delpword" type="password" style="font-family: Iceland" placeholder="Password" required>
+                    </fieldset>
+                    <br>
+                    <button ng-show="delForm.deluname.$valid && delForm.delpword.$valid" type="submit" style="font-family: Iceland" class="pure-button pure-input-1-2 pure-button-primary startGame" ng-click="deleteAttempt()">Delete Account</button>
+                </form></center>
+                
+            </div>
+            
+
